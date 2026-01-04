@@ -20,6 +20,8 @@ class StudentsListActivity : AppCompatActivity() {
     Student("213454051", "Yael Abbo", "054-2261484", "Somewhere, Kirayt Ono", true)
   )
 
+  // This launcher is now unused, but kept for future use.
+  // The logic to get an updated student back will need to be moved to StudentDetailsActivity.
   private val editStudentLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
@@ -50,25 +52,17 @@ class StudentsListActivity : AppCompatActivity() {
     }
 
     adapter = StudentsListAdapter(students) { student, position ->
-      val intent = Intent(this, EditStudentActivity::class.java).apply {
-        putExtra(EditStudentActivity.EXTRA_STUDENT, student)
-        putExtra(EditStudentActivity.EXTRA_POSITION, position)
+      // Changed this to launch StudentDetailsActivity
+      val intent = Intent(this, StudentDetailsActivity::class.java).apply {
+        // Assuming StudentDetailsActivity can handle a Parcelable Student object
+        // with the key "EXTRA_STUDENT".
+        putExtra("EXTRA_STUDENT", student)
       }
 
-      editStudentLauncher.launch(intent)
+      startActivity(intent)
     }
 
     binding.studentsList.layoutManager = LinearLayoutManager(this)
     binding.studentsList.adapter = adapter
-
-//    val divider = DividerItemDecoration(
-//      this,
-//      DividerItemDecoration.VERTICAL,
-//    )
-//
-//    binding.studentsList.addItemDecoration(divider)
-//    binding.studentsList.addItemDecoration(
-//      SpaceItemDecoration(4)
-//    )
   }
 }
