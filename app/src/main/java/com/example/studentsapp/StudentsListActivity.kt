@@ -1,8 +1,9 @@
 package com.example.studentsapp
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,28 +21,29 @@ class StudentsListActivity : AppCompatActivity() {
     Student("213454051", "Yael Abbo", "054-2261484", "Somewhere, Kirayt Ono", true)
   )
 
-  // This launcher is now unused, but kept for future use.
-  // The logic to get an updated student back will need to be moved to StudentDetailsActivity.
-  private val editStudentLauncher = registerForActivityResult(
+  // New launcher to get results back from StudentDetailsActivity
+  private val detailsLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
-    if (result.resultCode != RESULT_OK) return@registerForActivityResult
+    if (result.resultCode == Activity.RESULT_OK) {
+      val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
+      } else {
+        @Suppress("DEPRECATION")
+        result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
+      }
+      val position = result.data?.getIntExtra("EXTRA_POSITION", -1)
 
-    @Suppress("DEPRECATION")
-    val updatedStudent =
-      result.data?.getParcelableExtra<Student>(EditStudentActivity.EXTRA_STUDENT)
-        ?: return@registerForActivityResult
-
-    val position = result.data?.getIntExtra(EditStudentActivity.EXTRA_POSITION, -1)
-      ?: return@registerForActivityResult
-
-    adapter.updateStudent(updatedStudent, position)
+      if (updatedStudent != null && position != null && position != -1) {
+        // Update the student in the list and notify the adapter
+        students[position] = updatedStudent
+        adapter.notifyItemChanged(position)
+      }
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    enableEdgeToEdge()
-
     binding = ActivityStudentsListBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
@@ -52,14 +54,12 @@ class StudentsListActivity : AppCompatActivity() {
     }
 
     adapter = StudentsListAdapter(students) { student, position ->
-      // Changed this to launch StudentDetailsActivity
+      // Use the new launcher to start StudentDetailsActivity for a result
       val intent = Intent(this, StudentDetailsActivity::class.java).apply {
-        // Assuming StudentDetailsActivity can handle a Parcelable Student object
-        // with the key "EXTRA_STUDENT".
         putExtra("EXTRA_STUDENT", student)
+        putExtra("EXTRA_POSITION", position) // Pass the position
       }
-
-      startActivity(intent)
+      detailsLauncher.launch(intent)
     }
 
     binding.studentsList.layoutManager = LinearLayoutManager(this)

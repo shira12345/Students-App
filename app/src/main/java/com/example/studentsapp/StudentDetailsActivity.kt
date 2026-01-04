@@ -12,12 +12,12 @@ class StudentDetailsActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityStudentDetailsBinding
   private var student: Student? = null
+  private var position: Int = -1
 
   private val editStudentLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
     if (result.resultCode == Activity.RESULT_OK) {
-      // Get the updated student from the result
       val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
       } else {
@@ -25,10 +25,15 @@ class StudentDetailsActivity : AppCompatActivity() {
         result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
       }
 
-      // Update the local student object and refresh the UI
       if (updatedStudent != null) {
         student = updatedStudent
         displayStudentInfo()
+
+        // Set the result to be sent back to StudentsListActivity
+        val resultIntent = Intent()
+        resultIntent.putExtra("EXTRA_STUDENT", student)
+        resultIntent.putExtra("EXTRA_POSITION", position)
+        setResult(Activity.RESULT_OK, resultIntent)
       }
     }
   }
@@ -38,22 +43,22 @@ class StudentDetailsActivity : AppCompatActivity() {
     binding = ActivityStudentDetailsBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    // Receive the student object from the list screen
     student = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       intent.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
     } else {
       @Suppress("DEPRECATION")
       intent.getParcelableExtra<Student>("EXTRA_STUDENT")
     }
+    // Get the position from the intent
+    position = intent.getIntExtra("EXTRA_POSITION", -1)
 
-    // Display the initial student information
     displayStudentInfo()
 
-    // Set up the button to launch the Edit screen for a result
     binding.editStudentButton.setOnClickListener {
       val intent = Intent(this, EditStudentActivity::class.java)
-      // Pass the current student object to the EditStudentActivity
       intent.putExtra("EXTRA_STUDENT", student)
+      // Pass the position along to the Edit activity
+      intent.putExtra("EXTRA_POSITION", position)
       editStudentLauncher.launch(intent)
     }
   }
