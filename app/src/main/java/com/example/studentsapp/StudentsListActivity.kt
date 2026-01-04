@@ -55,7 +55,7 @@ class StudentsListActivity : AppCompatActivity() {
     adapter = StudentsListAdapter(students) { student, position ->
       val intent = Intent(this, StudentDetailsActivity::class.java).apply {
         putExtra("EXTRA_STUDENT", student)
-        putExtra("EXTRA_POSITION", position) // Pass the position
+        putExtra("EXTRA_POSITION", position)
       }
       detailsLauncher.launch(intent)
     }
