@@ -29,7 +29,6 @@ class StudentDetailsActivity : AppCompatActivity() {
         student = updatedStudent
         displayStudentInfo()
 
-        // Set the result to be sent back to StudentsListActivity
         val resultIntent = Intent()
         resultIntent.putExtra("EXTRA_STUDENT", student)
         resultIntent.putExtra("EXTRA_POSITION", position)
@@ -49,7 +48,6 @@ class StudentDetailsActivity : AppCompatActivity() {
       @Suppress("DEPRECATION")
       intent.getParcelableExtra<Student>("EXTRA_STUDENT")
     }
-    // Get the position from the intent
     position = intent.getIntExtra("EXTRA_POSITION", -1)
 
     displayStudentInfo()
@@ -57,7 +55,6 @@ class StudentDetailsActivity : AppCompatActivity() {
     binding.editStudentButton.setOnClickListener {
       val intent = Intent(this, EditStudentActivity::class.java)
       intent.putExtra("EXTRA_STUDENT", student)
-      // Pass the position along to the Edit activity
       intent.putExtra("EXTRA_POSITION", position)
       editStudentLauncher.launch(intent)
     }

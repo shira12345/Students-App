@@ -12,7 +12,6 @@ class EditStudentActivity : AppCompatActivity() {
     private var position: Int = -1
 
     companion object {
-        // This key now matches the one used in StudentDetailsActivity
         const val EXTRA_STUDENT = "EXTRA_STUDENT"
         const val EXTRA_POSITION = "extra_position"
     }
@@ -23,7 +22,6 @@ class EditStudentActivity : AppCompatActivity() {
         binding = ActivityEditStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Simplified and safe way to get the student object
         student = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(EXTRA_STUDENT, Student::class.java)
         } else {

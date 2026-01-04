@@ -21,7 +21,6 @@ class StudentsListActivity : AppCompatActivity() {
     Student("213454051", "Yael Abbo", "054-2261484", "Somewhere, Kirayt Ono", true)
   )
 
-  // New launcher to get results back from StudentDetailsActivity
   private val detailsLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
@@ -54,7 +53,6 @@ class StudentsListActivity : AppCompatActivity() {
     }
 
     adapter = StudentsListAdapter(students) { student, position ->
-      // Use the new launcher to start StudentDetailsActivity for a result
       val intent = Intent(this, StudentDetailsActivity::class.java).apply {
         putExtra("EXTRA_STUDENT", student)
         putExtra("EXTRA_POSITION", position) // Pass the position
@@ -64,5 +62,15 @@ class StudentsListActivity : AppCompatActivity() {
 
     binding.studentsList.layoutManager = LinearLayoutManager(this)
     binding.studentsList.adapter = adapter
+
+    //    val divider = DividerItemDecoration(
+    //      this,
+    //      DividerItemDecoration.VERTICAL,
+    //    )
+    //
+    //    binding.studentsList.addItemDecoration(divider)
+    //    binding.studentsList.addItemDecoration(
+    //      SpaceItemDecoration(4)
+    //    )
   }
 }
