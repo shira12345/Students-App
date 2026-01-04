@@ -10,7 +10,7 @@ import com.example.studentsapp.databinding.ActivityEditStudentBinding
 
 class EditStudentActivity : AppCompatActivity() {
   private lateinit var binding: ActivityEditStudentBinding
-  private lateinit var student: Student
+  private var student: Student? = null
   private var position: Int = -1
 
   companion object {
@@ -32,7 +32,7 @@ class EditStudentActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    student = intent.getParcelableExtra(EXTRA_STUDENT)!!
+    student = intent.getParcelableExtra(EXTRA_STUDENT)
     position = intent.getIntExtra(EXTRA_POSITION, -1)
 
     fillInputs()
@@ -51,17 +51,19 @@ class EditStudentActivity : AppCompatActivity() {
   }
 
   private fun fillInputs() {
-    binding.apply {
-      editStudentName.setText(student.name)
-      editStudentId.setText(student.id)
-      editStudentPhone.setText(student.phone)
-      editStudentAddress.setText(student.address)
-      editStudentCheckbox.isChecked = student.isChecked
+    student?.let { (id, name, phone, address, isChecked) ->
+      binding.apply {
+        editStudentName.setText(name)
+        editStudentId.setText(id)
+        editStudentPhone.setText(phone)
+        editStudentAddress.setText(address)
+        editStudentCheckbox.isChecked = isChecked
+      }
     }
   }
 
   private fun updateStudent() {
-    student.apply {
+    student?.apply {
       name = binding.editStudentName.text.toString()
       id = binding.editStudentId.text.toString()
       phone = binding.editStudentPhone.text.toString()
