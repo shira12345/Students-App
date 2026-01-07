@@ -19,7 +19,7 @@ class StudentDetailsActivity : AppCompatActivity() {
   ) { result ->
     if (result.resultCode == RESULT_OK) {
       val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
+        result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT, Student::class.java)
       } else {
         @Suppress("DEPRECATION")
         result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT)
