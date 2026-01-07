@@ -44,10 +44,8 @@ class StudentDetailsActivity : AppCompatActivity() {
     binding = ActivityStudentDetailsBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    // Set the custom toolbar as the ActionBar
     setSupportActionBar(binding.toolbar)
 
-    // Add the back arrow to the ActionBar
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     student = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -68,15 +66,13 @@ class StudentDetailsActivity : AppCompatActivity() {
     }
   }
 
-  // Handle the click on the back arrow
   override fun onSupportNavigateUp(): Boolean {
-    finish() // Closes the current activity and returns to the previous one
+    finish()
     return true
   }
 
   private fun displayStudentInfo() {
     student?.let {
-      // Set the title of the ActionBar to the student's name
       supportActionBar?.title = it.name
 
       binding.studentDetailsName.text = it.name
