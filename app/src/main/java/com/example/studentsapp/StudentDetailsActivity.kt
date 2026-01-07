@@ -17,15 +17,16 @@ class StudentDetailsActivity : AppCompatActivity() {
   private val editStudentLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
-    if (result.resultCode == Activity.RESULT_OK) {
+    if (result.resultCode == RESULT_OK) {
       val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
       } else {
         @Suppress("DEPRECATION")
-        result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
+        result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT)
       }
 
-      if (updatedStudent != null) {
+      if (updatedStudent == null) return@registerForActivityResult;
+
         student = updatedStudent
         displayStudentInfo()
 
@@ -33,7 +34,7 @@ class StudentDetailsActivity : AppCompatActivity() {
         resultIntent.putExtra("EXTRA_STUDENT", student)
         resultIntent.putExtra("EXTRA_POSITION", position)
         setResult(Activity.RESULT_OK, resultIntent)
-      }
+
     }
   }
 
@@ -46,7 +47,7 @@ class StudentDetailsActivity : AppCompatActivity() {
       intent.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
     } else {
       @Suppress("DEPRECATION")
-      intent.getParcelableExtra<Student>("EXTRA_STUDENT")
+      intent.getParcelableExtra("EXTRA_STUDENT")
     }
     position = intent.getIntExtra("EXTRA_POSITION", -1)
 
@@ -54,8 +55,8 @@ class StudentDetailsActivity : AppCompatActivity() {
 
     binding.editStudentButton.setOnClickListener {
       val intent = Intent(this, EditStudentActivity::class.java)
-      intent.putExtra("EXTRA_STUDENT", student)
-      intent.putExtra("EXTRA_POSITION", position)
+      intent.putExtra(EditStudentActivity.EXTRA_STUDENT, student)
+      intent.putExtra(EditStudentActivity.EXTRA_POSITION, position)
       editStudentLauncher.launch(intent)
     }
   }
