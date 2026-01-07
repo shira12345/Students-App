@@ -23,7 +23,6 @@
     app:layout_constraintTop_toBottomOf="@+id/toolbar"
     app:srcCompat="@drawable/avatar" />
 
-  <!-- Name -->
   <TextView
     android:id="@+id/nameLabel"
     android:layout_width="wrap_content"
@@ -48,7 +47,6 @@
     app:layout_constraintTop_toBottomOf="@+id/student_details_avatar"
     tools:text="Kuku" />
 
-  <!-- ID -->
   <TextView
     android:id="@+id/idLabel"
     android:layout_width="wrap_content"
@@ -73,7 +71,6 @@
     app:layout_constraintTop_toBottomOf="@+id/student_details_name"
     tools:text="123456789" />
 
-  <!-- Phone -->
   <TextView
     android:id="@+id/phoneLabel"
     android:layout_width="wrap_content"
@@ -98,7 +95,6 @@
     app:layout_constraintTop_toBottomOf="@+id/student_details_id"
     tools:text="555-123-4567" />
 
-  <!-- Address -->
   <TextView
     android:id="@+id/addressLabel"
     android:layout_width="wrap_content"
