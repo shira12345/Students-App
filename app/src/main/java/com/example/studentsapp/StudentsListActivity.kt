@@ -21,25 +21,25 @@ class StudentsListActivity : AppCompatActivity() {
     Student("213454051", "Yael Abbo", "054-2261484", "Somewhere, Kirayt Ono", true)
   )
 
-  private val detailsLauncher = registerForActivityResult(
-    ActivityResultContracts.StartActivityForResult()
-  ) { result ->
-    if (result.resultCode == Activity.RESULT_OK) {
-      val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
-      } else {
-        @Suppress("DEPRECATION")
-        result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
-      }
-      val position = result.data?.getIntExtra("EXTRA_POSITION", -1)
+private val detailsLauncher = registerForActivityResult(
+  ActivityResultContracts.StartActivityForResult()
+) { result ->
+  if (result.resultCode == Activity.RESULT_OK) {
+    val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
+    } else {
+      @Suppress("DEPRECATION")
+      result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
+    }
+    val position = result.data?.getIntExtra("EXTRA_POSITION", -1)
 
-      if (updatedStudent != null && position != null && position != -1) {
-        // Update the student in the list and notify the adapter
-        students[position] = updatedStudent
-        adapter.notifyItemChanged(position)
-      }
+    if (updatedStudent != null && position != null && position != -1) {
+      // Update the student in the list and notify the adapter
+      students[position] = updatedStudent
+      adapter.notifyItemChanged(position)
     }
   }
+}
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -53,24 +53,24 @@ class StudentsListActivity : AppCompatActivity() {
     }
 
     adapter = StudentsListAdapter(students) { student, position ->
-      val intent = Intent(this, StudentDetailsActivity::class.java).apply {
-        putExtra("EXTRA_STUDENT", student)
-        putExtra("EXTRA_POSITION", position)
-      }
-      detailsLauncher.launch(intent)
+    val intent = Intent(this, StudentDetailsActivity::class.java).apply {
+      putExtra("EXTRA_STUDENT", student)
+      putExtra("EXTRA_POSITION", position)
     }
+    detailsLauncher.launch(intent)
+  }
 
-    binding.studentsList.layoutManager = LinearLayoutManager(this)
-    binding.studentsList.adapter = adapter
+  binding.studentsList.layoutManager = LinearLayoutManager(this)
+  binding.studentsList.adapter = adapter
 
-    //    val divider = DividerItemDecoration(
-    //      this,
-    //      DividerItemDecoration.VERTICAL,
-    //    )
-    //
-    //    binding.studentsList.addItemDecoration(divider)
-    //    binding.studentsList.addItemDecoration(
-    //      SpaceItemDecoration(4)
-    //    )
+  //    val divider = DividerItemDecoration(
+  //      this,
+  //      DividerItemDecoration.VERTICAL,
+  //    )
+  //
+  //    binding.studentsList.addItemDecoration(divider)
+  //    binding.studentsList.addItemDecoration(
+  //      SpaceItemDecoration(4)
+  //    )
   }
 }

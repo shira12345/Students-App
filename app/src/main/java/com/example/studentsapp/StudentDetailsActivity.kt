@@ -25,16 +25,17 @@ class StudentDetailsActivity : AppCompatActivity() {
         result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT)
       }
 
-      if (updatedStudent == null) return@registerForActivityResult;
+      if (updatedStudent == null) {
+        return@registerForActivityResult
+      }
 
-        student = updatedStudent
-        displayStudentInfo()
+      student = updatedStudent
+      displayStudentInfo()
 
-        val resultIntent = Intent()
-        resultIntent.putExtra("EXTRA_STUDENT", student)
-        resultIntent.putExtra("EXTRA_POSITION", position)
-        setResult(Activity.RESULT_OK, resultIntent)
-
+      val resultIntent = Intent()
+      resultIntent.putExtra("EXTRA_STUDENT", student)
+      resultIntent.putExtra("EXTRA_POSITION", position)
+      setResult(Activity.RESULT_OK, resultIntent)
     }
   }
 
@@ -42,6 +43,12 @@ class StudentDetailsActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityStudentDetailsBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    // Set the custom toolbar as the ActionBar
+    setSupportActionBar(binding.toolbar)
+
+    // Add the back arrow to the ActionBar
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     student = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       intent.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
@@ -61,8 +68,17 @@ class StudentDetailsActivity : AppCompatActivity() {
     }
   }
 
+  // Handle the click on the back arrow
+  override fun onSupportNavigateUp(): Boolean {
+    finish() // Closes the current activity and returns to the previous one
+    return true
+  }
+
   private fun displayStudentInfo() {
     student?.let {
+      // Set the title of the ActionBar to the student's name
+      supportActionBar?.title = it.name
+
       binding.studentDetailsName.text = it.name
       binding.studentDetailsId.text = it.id
       binding.studentDetailsPhone.text = it.phone
