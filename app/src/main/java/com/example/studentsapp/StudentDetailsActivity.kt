@@ -21,7 +21,6 @@ class StudentDetailsActivity : AppCompatActivity() {
         val isDeleted = result.data?.getBooleanExtra(EditStudentActivity.EXTRA_IS_DELETED, false) ?: false
         
         if (isDeleted) {
-            // If deleted, pass this information back to StudentsListActivity and close
             val resultIntent = Intent()
             resultIntent.putExtra(EditStudentActivity.EXTRA_POSITION, position)
             resultIntent.putExtra(EditStudentActivity.EXTRA_IS_DELETED, true)
