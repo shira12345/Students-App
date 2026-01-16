@@ -18,6 +18,18 @@ class StudentDetailsActivity : AppCompatActivity() {
     ActivityResultContracts.StartActivityForResult()
   ) { result ->
     if (result.resultCode == RESULT_OK) {
+        val isDeleted = result.data?.getBooleanExtra(EditStudentActivity.EXTRA_IS_DELETED, false) ?: false
+        
+        if (isDeleted) {
+            // If deleted, pass this information back to StudentsListActivity and close
+            val resultIntent = Intent()
+            resultIntent.putExtra(EditStudentActivity.EXTRA_POSITION, position)
+            resultIntent.putExtra(EditStudentActivity.EXTRA_IS_DELETED, true)
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
+            return@registerForActivityResult
+        }
+
       val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT, Student::class.java)
       } else {

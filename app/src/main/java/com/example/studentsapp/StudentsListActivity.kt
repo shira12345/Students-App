@@ -25,15 +25,24 @@ class StudentsListActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            val isDeleted = result.data?.getBooleanExtra(EditStudentActivity.EXTRA_IS_DELETED, false) ?: false
+            val position = result.data?.getIntExtra(EditStudentActivity.EXTRA_POSITION, -1) ?: -1
+
+            if (isDeleted && position != -1) {
+                students.removeAt(position)
+                adapter.notifyItemRemoved(position)
+                adapter.notifyItemRangeChanged(position, students.size)
+                return@registerForActivityResult
+            }
+
             val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
             } else {
                 @Suppress("DEPRECATION")
                 result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
             }
-            val position = result.data?.getIntExtra("EXTRA_POSITION", -1)
 
-            if (updatedStudent != null && position != null && position != -1) {
+            if (updatedStudent != null && position != -1) {
                 students[position] = updatedStudent
                 adapter.notifyItemChanged(position)
             }
