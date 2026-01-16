@@ -2,6 +2,7 @@ package com.example.studentsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studentsapp.databinding.ActivityNewStudentBinding
 
@@ -18,11 +19,16 @@ class NewStudentActivity : AppCompatActivity() {
         supportActionBar?.title = "New Student"
 
         binding.saveStudentButton.setOnClickListener {
-            val name = binding.newStudentName.text.toString()
-            val id = binding.newStudentId.text.toString()
-            val phone = binding.newStudentPhone.text.toString()
-            val address = binding.newStudentAddress.text.toString()
+            val name = binding.newStudentName.text.toString().trim()
+            val id = binding.newStudentId.text.toString().trim()
+            val phone = binding.newStudentPhone.text.toString().trim()
+            val address = binding.newStudentAddress.text.toString().trim()
             val isChecked = binding.newStudentCheckbox.isChecked
+
+            if (name.isEmpty() || id.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val newStudent = Student(id, name, phone, address, isChecked)
 
