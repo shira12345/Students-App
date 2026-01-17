@@ -23,6 +23,10 @@ class EditStudentActivity : AppCompatActivity() {
         binding = ActivityEditStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Edit Student"
+
         student = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(EXTRA_STUDENT, Student::class.java)
         } else {
@@ -47,6 +51,11 @@ class EditStudentActivity : AppCompatActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun fillInputs() {

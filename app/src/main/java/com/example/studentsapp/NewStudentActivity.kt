@@ -17,6 +17,7 @@ class NewStudentActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "New Student"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.saveStudentButton.setOnClickListener {
             val name = binding.newStudentName.text.toString().trim()
@@ -42,5 +43,10 @@ class NewStudentActivity : AppCompatActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
