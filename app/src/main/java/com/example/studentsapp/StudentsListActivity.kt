@@ -36,7 +36,7 @@ class StudentsListActivity : AppCompatActivity() {
             }
 
             val updatedStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
+                result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT, Student::class.java)
             } else {
                 @Suppress("DEPRECATION")
                 result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
@@ -54,7 +54,7 @@ class StudentsListActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val newStudent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                result.data?.getParcelableExtra("EXTRA_STUDENT", Student::class.java)
+                result.data?.getParcelableExtra(EditStudentActivity.EXTRA_STUDENT, Student::class.java)
             } else {
                 @Suppress("DEPRECATION")
                 result.data?.getParcelableExtra<Student>("EXTRA_STUDENT")
@@ -80,7 +80,7 @@ class StudentsListActivity : AppCompatActivity() {
 
         adapter = StudentsListAdapter(students) { student, position ->
             val intent = Intent(this, StudentDetailsActivity::class.java).apply {
-                putExtra("EXTRA_STUDENT", student)
+                putExtra(EditStudentActivity.EXTRA_STUDENT, student)
                 putExtra("EXTRA_POSITION", position)
             }
             detailsLauncher.launch(intent)

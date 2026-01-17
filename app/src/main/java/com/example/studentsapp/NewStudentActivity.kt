@@ -34,7 +34,7 @@ class NewStudentActivity : AppCompatActivity() {
             val newStudent = Student(id, name, phone, address, isChecked)
 
             val resultIntent = Intent()
-            resultIntent.putExtra("EXTRA_STUDENT", newStudent)
+            resultIntent.putExtra(EditStudentActivity.EXTRA_STUDENT, newStudent)
             setResult(RESULT_OK, resultIntent)
             finish()
         }
