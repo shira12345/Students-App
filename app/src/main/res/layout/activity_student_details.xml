@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/detailsStudentActivity"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".StudentDetailsActivity">
+
+  <com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+    android:id="@+id/student_details_avatar"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+    app:srcCompat="@drawable/avatar" />
+
+  <TextView
+    android:id="@+id/nameLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="@string/student_name_label"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    app:layout_constraintBaseline_toBaselineOf="@+id/student_details_name"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+    android:id="@+id/student_details_name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginEnd="16dp"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/nameLabel"
+    app:layout_constraintTop_toBottomOf="@+id/student_details_avatar"
+    tools:text="Kuku" />
+
+  <TextView
+    android:id="@+id/idLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="@string/id_label"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    app:layout_constraintBaseline_toBaselineOf="@+id/student_details_id"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+    android:id="@+id/student_details_id"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/idLabel"
+    app:layout_constraintTop_toBottomOf="@+id/student_details_name"
+    tools:text="123456789" />
+
+  <TextView
+    android:id="@+id/phoneLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="@string/phone_label"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    app:layout_constraintBaseline_toBaselineOf="@+id/student_details_phone"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+    android:id="@+id/student_details_phone"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/phoneLabel"
+    app:layout_constraintTop_toBottomOf="@+id/student_details_id"
+    tools:text="555-123-4567" />
+
+  <TextView
+    android:id="@+id/addressLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="@string/address_label"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    app:layout_constraintBaseline_toBaselineOf="@+id/student_details_address"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+    android:id="@+id/student_details_address"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/addressLabel"
+    app:layout_constraintTop_toBottomOf="@+id/student_details_phone"
+    tools:text="123 Main St, Anytown" />
+
+
+  <CheckBox
+    android:id="@+id/student_details_checkbox"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="24dp"
+    android:clickable="false"
+    android:text="@string/checked_label"
+    android:textSize="20sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/student_details_address" />
+
+  <Button
+    android:id="@+id/edit_student_button"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:text="EDIT"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
